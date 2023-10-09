@@ -17,7 +17,7 @@ class BloodPressure(models.Model):
     systolicPress = models.IntegerField()
     diastolicPress = models.IntegerField()
     bpm = models.IntegerField()
-    userId = models.ForeignKey("User",on_delete=models.DO_NOTHING,)
+    userId = models.ForeignKey("User",on_delete=models.PROTECT,)
     datetime = models.DateTimeField(auto_now_add=True)
 
 
@@ -29,7 +29,7 @@ class Weight(models.Model):
     bmi = models.DecimalField(null=True, blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
     weightId = models.IntegerField(primary_key=True)
-    userId = models.ForeignKey("User",on_delete=models.DO_NOTHING,)
+    userId = models.ForeignKey("User",on_delete=models.PROTECT,)
 
 
     def __str__(self):
