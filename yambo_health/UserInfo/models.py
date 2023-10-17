@@ -1,7 +1,7 @@
 from django.db import models
 
 class Patient(models.Model):
-    patientId = models.AutoField(primary_key=True)
+    patientId = models.AutoField(primary_key=True,)
     datetime = models.DateTimeField(auto_now_add=True)
     user = models.CharField(max_length=15)
     password = models.CharField(max_length=15)
@@ -12,7 +12,7 @@ class Patient(models.Model):
         return self.user
 
 class BloodPressure(models.Model):
-    userId = models.ForeignKey("Patient",on_delete=models.CASCADE,null=True)
+    userId = models.ForeignKey("Patient",on_delete=models.CASCADE,null=True,to_field='patientId')
 
     systolicPress = models.IntegerField(null=True)
     diastolicPress = models.IntegerField(null=True)

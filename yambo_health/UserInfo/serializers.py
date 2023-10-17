@@ -4,7 +4,7 @@ from .models import Patient,BloodPressure,Weight
 class BloodPressureSerializer(serializers.ModelSerializer):
     class Meta:
         model = BloodPressure
-        fields = ["patientId","systolicPress","diastolicPress","bpm","datetime"]
+        fields = ["userId","systolicPress","diastolicPress","bpm","datetime"]
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient

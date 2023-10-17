@@ -2,5 +2,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('users/', views.all_user_details),
+    path('users/', views.UserList.as_view()),
+    path('users/<int:pk>/', views.UserDetail.as_view()),
+    path('bp/', views.BpList.as_view()),
+    path('bp/create', views.BpCreate.as_view()),
+    path('bp/<int:userId>/', views.BpDetail.as_view(),name='bp-detail'),
+    path('weight/', views.WeightList.as_view()),
+    path('weight/create', views.WeightCreate.as_view()),
+    path('weight/<int:userId>/', views.WeightDetail.as_view(), name='weight-detail'),
 ]
