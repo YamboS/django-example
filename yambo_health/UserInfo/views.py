@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Patient,BloodPressure,Weight
-from .serializers import UserSerializer,BloodPressureSerializer,WeightSerializer
+from .models import Patient,BloodPressure,Weight,BloodGlucose
+from .serializers import UserSerializer,BloodPressureSerializer,WeightSerializer,BloodGlucoseSerializer
 
 
 
@@ -56,3 +56,31 @@ class WeightDetail(generics.ListAPIView):
             queryset = queryset.filter(user_id=user_id)
 
         return queryset
+
+
+class BloodGlucoseDetail(generics.ListAPIView):
+    serializer_class = BloodGlucoseSerializer
+
+    def get_queryset(self):
+        custom_field_value = self.kwargs['userId']  # Use the custom field value from the URL
+        user_id = self.request.query_params.get('userId')
+        queryset = BloodGlucose.objects.filter(userId=custom_field_value)
+
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+
+        return queryset
+
+
+class BloodGlucoseCreate(generics.CreateAPIView):
+    queryset = BloodGlucose.objects.all()
+    serializer_class = BloodPressureSerializer
+
+
+class BloodGlucoseList(generics.ListAPIView):
+    queryset = BloodGlucose.objects.all()
+    serializer_class = BloodPressureSerializer
+
+class BloodGlucoseDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BloodGlucose.objects.all()
+    serializer_class = BloodGlucoseSerializer

@@ -1,16 +1,21 @@
 from rest_framework import serializers
-from .models import Patient,BloodPressure,Weight
+from .models import Patient,BloodPressure,Weight,BloodGlucose
 
 class BloodPressureSerializer(serializers.ModelSerializer):
     class Meta:
         model = BloodPressure
-        fields = ["userId","systolicPress","diastolicPress","bpm","datetime"]
+        fields = ["userId","recordIdBp","systolicPress","diastolicPress","bpm","datetime"]
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ["patientId","datetime","user","password","bpId","weightId"]
+        fields = ["recordIdBp","patientId","datetime","user","password","bpId","weightId"]
 
 class WeightSerializer(serializers.ModelSerializer):
     class Meta:
         model = Weight
-        fields = ["userId","weightLb","bmi","datetime"]
+        fields = ["recordIdW","userId","weightLb","bmi","datetime"]
+
+class BloodGlucoseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BloodGlucose
+        fields = ["userId","recordIdBg","blood_sugar_level","datetime"]
