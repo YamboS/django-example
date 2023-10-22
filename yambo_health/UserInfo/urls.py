@@ -7,13 +7,13 @@ urlpatterns = [
 
     path('bp/', views.BpList.as_view()),
     path('bp/create', views.BpCreate.as_view()),
-    path('bp/<int:userId>/', views.BpDetail.as_view(),name='bp-detail'),
+    path('bp/<int:pk>/', views.BpDetail.as_view(),name='bp-detail'),
 
     path('weight/', views.WeightList.as_view()),
     path('weight/create', views.WeightCreate.as_view()),
-    path('weight/<int:userId>/', views.WeightDetail.as_view(), name='weight-detail'),
+    path('weight/<int:pk>/', views.WeightDetail.as_view(), name='weight-detail'),
 
     path('bg/', views.BloodGlucoseList.as_view()),
     path('bg/create', views.BloodGlucoseCreate.as_view()),
-    path('bg/<int:userId>/', views.BloodGlucoseDetail.as_view(), name='bloodGlucose-detail'),
+    path('bg/<int:pk>/', views.BloodGlucoseDetail.as_view(), name='bloodGlucose-detail'),
 ]

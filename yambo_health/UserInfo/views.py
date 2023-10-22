@@ -1,4 +1,6 @@
 from rest_framework import generics
+from rest_framework import status
+from rest_framework.response import Response
 from .models import Patient,BloodPressure,Weight,BloodGlucose
 from .serializers import UserSerializer,BloodPressureSerializer,WeightSerializer,BloodGlucoseSerializer
 
@@ -22,18 +24,9 @@ class BpList(generics.ListAPIView):
     serializer_class = BloodPressureSerializer
 
 
-class BpDetail(generics.ListAPIView):
+class BpDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Weight.objects.all()
     serializer_class = BloodPressureSerializer
-
-    def get_queryset(self):
-        custom_field_value = self.kwargs['userId']  # Use the custom field value from the URL
-        user_id = self.request.query_params.get('userId')
-        queryset = BloodPressure.objects.filter(userId=custom_field_value)
-
-        if user_id:
-            queryset = queryset.filter(user_id=user_id)
-
-        return queryset
 
 class WeightCreate(generics.CreateAPIView):
     queryset = Weight.objects.all()
@@ -44,33 +37,31 @@ class WeightList(generics.ListAPIView):
     serializer_class = WeightSerializer
 
 
-class WeightDetail(generics.ListAPIView):
+class WeightDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Weight.objects.all()
     serializer_class = WeightSerializer
 
-    def get_queryset(self):
-        custom_field_value = self.kwargs['userId']  # Use the custom field value from the URL
-        user_id = self.request.query_params.get('userId')
-        queryset = Weight.objects.filter(userId=custom_field_value)
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
 
-        if user_id:
-            queryset = queryset.filter(user_id=user_id)
+            # Retrieve the updated data
+            updated_data = Weight.objects.all()
 
-        return queryset
+            # Serialize the updated data
+            serialized_data = WeightSerializer(updated_data, many=True).data
+
+            return Response({'data': serialized_data}, status=status.HTTP_200_OK)
+        except Weight.DoesNotExist:
+            return Response({'error': 'Object not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class BloodGlucoseDetail(generics.ListAPIView):
+class BloodGlucoseDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Weight.objects.all()
     serializer_class = BloodGlucoseSerializer
-
-    def get_queryset(self):
-        custom_field_value = self.kwargs['userId']  # Use the custom field value from the URL
-        user_id = self.request.query_params.get('userId')
-        queryset = BloodGlucose.objects.filter(userId=custom_field_value)
-
-        if user_id:
-            queryset = queryset.filter(user_id=user_id)
-
-        return queryset
-
 
 class BloodGlucoseCreate(generics.CreateAPIView):
     queryset = BloodGlucose.objects.all()
