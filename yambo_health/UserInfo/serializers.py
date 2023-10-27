@@ -8,7 +8,7 @@ class BloodPressureSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ["recordIdBp","patientId","datetime","user","password","bpId","weightId"]
+        fields = ["recordIdBp","patientId","datetime","user","password","recordIdBp","recordIdW","recordIdBg"]
 
 class WeightSerializer(serializers.ModelSerializer):
     class Meta:

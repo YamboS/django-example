@@ -5,8 +5,9 @@ class Patient(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     user = models.CharField(max_length=15)
     password = models.CharField(max_length=15)
-    bpId = models.IntegerField(null=True)
-    weightId = models.IntegerField(null=True)
+    recordIdBp = models.ForeignKey("BloodPressure", on_delete=models.PROTECT, null=True, to_field='recordIdBp')
+    recordIdW = models.ForeignKey("Weight", on_delete=models.PROTECT, null=True, to_field='recordIdW')
+    recordIdBg = models.ForeignKey("BloodGlucose", on_delete=models.PROTECT, null=True, to_field='recordIdBg')
 
     def __str__(self):
         return self.user
@@ -29,8 +30,8 @@ class Weight(models.Model):
 
 class BloodGlucose(models.Model):
     userId = models.ForeignKey("Patient",on_delete=models.CASCADE,null=True,to_field='patientId')
-    recordIdBg = models.AutoField(primary_key=True, )
-    blood_sugar_level  = models.IntegerField(null=True)
+    recordIdBg = models.AutoField(primary_key=True,)
+    blood_sugar_level = models.IntegerField(null=True)
     datetime = models.DateTimeField(auto_now_add=True,)
 
 
